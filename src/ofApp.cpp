@@ -69,7 +69,7 @@ void ofApp::draw(){
     //ofPushMatrix();
     //ofTranslate(terra.x, terra.y);
     //ofRotateZ(90 + rotationClick);
-    planetaTerra.draw(terra.x, terra.x);
+    planetaTerra.draw(terra.x, terra.x);// quando coloco valor fixo ele funciona
     planetaLua.draw(lua.x, lua.y);
     //ofPopMatrix();
 }
