@@ -37,6 +37,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    ofSetBackgroundColor(0, 0, 0, 255);
     if (ofGetElapsedTimef() - _startDeltaTime > _interval)
     {
         sen = sin(angle);
@@ -46,16 +47,12 @@ void ofApp::update(){
         newY = distanciaLuaTerra.x * sen + distanciaLuaTerra.y * coss;
         newPosition.set(newX, newY);
 
-        lua = newPosition + terra;
+        lua = newPosition;
 
         angle += 1;
         if(clicked) {
-            //terra.x += velocity * cos(rotationClick*PI/180);
-            //terra.y += velocity * sin(rotationClick*PI/180);
-
-            //if(clicked && terra == mouseposition) {
-                //clicked = false;
-            //}
+            terra.x += velocity * cos(rotationClick*PI/180);
+            terra.y += velocity * sin(rotationClick*PI/180);
 
         }
 
@@ -65,13 +62,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-    //ofPushMatrix();
-    //ofTranslate(terra.x, terra.y);
-    //ofRotateZ(90 + rotationClick);
-    planetaTerra.draw(terra.x, terra.x);// quando coloco valor fixo ele funciona
-    planetaLua.draw(lua.x, lua.y);
-    //ofPopMatrix();
+    ofPushMatrix();
+    ofTranslate(terra.x, terra.y);
+    ofRotateZ(90 + rotationClick);
+    planetaTerra.draw(0, 0);
+    ofPushMatrix();
+    ofTranslate(lua.x, lua.y);
+    planetaLua.draw(0, 0);
+    ofPopMatrix();
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------
