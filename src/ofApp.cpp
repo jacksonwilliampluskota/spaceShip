@@ -1,59 +1,51 @@
 #include "ofApp.h"
 #include <iostream>
 #include <math.h>
+#include "actor.h"
 using namespace std;
 
-ofVec2f terra;
-ofVec2f lua;
-ofVec2f distanciaLuaTerra;
-ofVec2f newPosition;
-ofVec2f mouseposition;
-float rotacao = 30.0f;
-ofImage planetaTerra;
-ofImage planetaLua;
 float _startDeltaTime;
 float _interval = 0.07f;
-float angle;
-float sen;
-float coss;
-float newX;
-float newY;
-float rotationClick;
 float velocity = 10.0f;
 bool clicked = false;
 
-//--------------------------------------------------------------
-void ofApp::setup(){
-    _startDeltaTime = ofGetElapsedTimef();
-    angle = rotacao * PI / 180;
-    terra.set(450, 350);
-    lua.set(500, 500);
-    distanciaLuaTerra = lua - terra;
+actor *spaceship;
+actor *escudo;
 
-    planetaTerra.load("images/spaceship.png");
-    planetaLua.load("images/moon.png");
-    planetaTerra.setAnchorPercent(0.5f, 0.5f);
+//--------------------------------------------------------------
+void ofApp::setup()
+{
+    _startDeltaTime = ofGetElapsedTimef();
+
+    spaceship = new actor(450, 350, "images/spaceship.png");
+    escudo = new actor(500, 500, "images/moon.png");
+    spaceship->imagem.setAnchorPercent(0.5f, 0.5f);
+    escudo->getDistancia(spaceship->vetor);
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
     ofSetBackgroundColor(0, 0, 0, 255);
     if (ofGetElapsedTimef() - _startDeltaTime > _interval)
     {
-        sen = sin(angle);
-        coss = cos(angle);
+        escudo->rotation();
 
-        newX = distanciaLuaTerra.x * coss - distanciaLuaTerra.y * sen;
-        newY = distanciaLuaTerra.x * sen + distanciaLuaTerra.y * coss;
-        newPosition.set(newX, newY);
+        if (clicked)
+        {
+            spaceship->vetor.x += velocity * cos(spaceship->rotationClick * PI / 180);
+            spaceship->vetor.y += velocity * sin(spaceship->rotationClick * PI / 180);
+        }
 
-        lua = newPosition;
-
-        angle += 1;
-        if(clicked) {
-            terra.x += velocity * cos(rotationClick*PI/180);
-            terra.y += velocity * sin(rotationClick*PI/180);
-
+        if ((spaceship->vetor.x > ofGetWindowWidth()) || (spaceship->vetor.x < 0))
+        {
+            velocity = velocity * -1;
+            spaceship->rotationClick += 90;
+        }
+        if ((spaceship->vetor.y > ofGetWindowHeight()) || (spaceship->vetor.y < 0))
+        {
+            velocity = velocity * -1;
+            spaceship->rotationClick += 90;
         }
 
         _startDeltaTime = ofGetElapsedTimef();
@@ -61,72 +53,71 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw()
+{
     ofPushMatrix();
-    ofTranslate(terra.x, terra.y);
-    ofRotateZ(90 + rotationClick);
-    planetaTerra.draw(0, 0);
+    ofTranslate(spaceship->vetor.x, spaceship->vetor.y);
+    ofRotateZ(90 + spaceship->rotationClick);
+    spaceship->draw();
     ofPushMatrix();
-    ofTranslate(lua.x, lua.y);
-    planetaLua.draw(0, 0);
+    ofTranslate(escudo->vetor.x, escudo->vetor.y);
+    escudo->draw();
     ofPopMatrix();
     ofPopMatrix();
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
+void ofApp::keyPressed(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
+void ofApp::keyReleased(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::mouseMoved(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
+void ofApp::mouseDragged(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    mouseposition.set(x, y);
-    ofVec2f newVec = mouseposition - terra;
-    rotationClick = (atan2(newVec.y, newVec.x) * 180) / PI;
+void ofApp::mousePressed(int x, int y, int button)
+{
+    spaceship->clickMouse(x, y);
     clicked = true;
-}
 
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+    //--------------------------------------------------------------
+    void ofApp::mouseReleased(int x, int y, int button)
+    {
+    }
 
-}
+    //--------------------------------------------------------------
+    void ofApp::mouseEntered(int x, int y)
+    {
+    }
 
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
+    //--------------------------------------------------------------
+    void ofApp::mouseExited(int x, int y)
+    {
+    }
 
-}
+    //--------------------------------------------------------------
+    void ofApp::windowResized(int w, int h)
+    {
+    }
 
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
+    //--------------------------------------------------------------
+    void ofApp::gotMessage(ofMessage msg)
+    {
+    }
 
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
-}
+    //--------------------------------------------------------------
+    void ofApp::dragEvent(ofDragInfo dragInfo)
+    {
+    }

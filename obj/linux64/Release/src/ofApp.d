@@ -347,7 +347,8 @@ obj/linux64/Release/src/ofApp.o: \
  /home/jackson/Downloads/OF/libs/openFrameworks/video/ofVideoPlayer.h \
  /home/jackson/Downloads/OF/libs/openFrameworks/video/ofGstVideoPlayer.h \
  /home/jackson/Downloads/OF/libs/openFrameworks/3d/ofCamera.h \
- /home/jackson/Downloads/OF/libs/openFrameworks/3d/ofEasyCam.h
+ /home/jackson/Downloads/OF/libs/openFrameworks/3d/ofEasyCam.h \
+ /home/jackson/Documents/spaceship/src/actor.h
 
 /home/jackson/Documents/spaceship/src/ofApp.h:
 
@@ -1078,3 +1079,5 @@ obj/linux64/Release/src/ofApp.o: \
 /home/jackson/Downloads/OF/libs/openFrameworks/3d/ofCamera.h:
 
 /home/jackson/Downloads/OF/libs/openFrameworks/3d/ofEasyCam.h:
+
+/home/jackson/Documents/spaceship/src/actor.h:
