@@ -26,7 +26,6 @@ void ofApp::setup()
 //--------------------------------------------------------------
 void ofApp::update()
 {
-    ofSetBackgroundColor(0, 0, 0, 255);
     if (ofGetElapsedTimef() - _startDeltaTime > _interval)
     {
         escudo->rotation();
@@ -55,6 +54,7 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+    ofSetBackgroundColor(0, 0, 0, 255);
     ofPushMatrix();
     ofTranslate(spaceship->vetor.x, spaceship->vetor.y);
     ofRotateZ(90 + spaceship->rotationClick);
